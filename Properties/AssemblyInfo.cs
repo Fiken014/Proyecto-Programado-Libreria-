@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // La información general sobre un ensamblado se controla mediante lo siguiente
 // conjunto de atributos. Cambie los valores de estos atributos para modificar la información
 // asociada a un ensamblado.
-[assembly: AssemblyTitle("PAV_PF_KendallBonilla_RandyArtavia")]
+[assembly: AssemblyTitle("PAV_PF_KendallBonilla")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PAV_PF_KendallBonilla_RandyArtavia")]
+[assembly: AssemblyProduct("PAV_PF_KendallBonilla")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
