@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PAV_PF_KendallBonilla_RandyArtavia.Models
+namespace PAV_PF_KendallBonilla.Models
 {
     using System;
     using System.Data.Entity;
