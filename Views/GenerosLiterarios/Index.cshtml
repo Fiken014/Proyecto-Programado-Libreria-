@@ -1,0 +1,49 @@
+@model IEnumerable<PAV_PF_KendallBonilla_RandyArtavia.Models.GenerosLiterarios>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Generos Literarios";
+}
+
+@Html.AntiForgeryToken()
+<div class="container my-5">
+    @if (Session["Perfil"]?.ToString() == "Administrador")
+    {
+        <p>
+            @Html.ActionLink("Crear Nuevo Género", "Create", null, new { @class = "btn btn-primary" })
+        </p>
+    }
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CodigoGenero</td>
+                    <td>@item.DescripcionGenero</td>
+                    <td>
+                        @if (Session["Perfil"]?.ToString() == "Administrador")
+                        {
+                            <a href="@Url.Action("Edit", "GenerosLiterarios", new { id = item.GeneroID })" class="btn btn-info btn-sm">
+                                Editar
+                            </a>
+                            <a href="@Url.Action("Details", "GenerosLiterarios", new { id = item.GeneroID })" class="btn btn-warning btn-sm">
+                                Detalles
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Sin acciones disponibles</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

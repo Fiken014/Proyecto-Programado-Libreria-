@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewBag.Title - Librería La Estantería Mágica</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Content/login.css" rel="stylesheet">
+</head>
+<body>
+    @{
+        var perfil = Session["Perfil"]?.ToString();
+        var nombreCompleto = Session["NombreCompleto"]?.ToString();
+    }
+
+    <header class="gradient-custom-2 text-white py-3">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <nav>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white h5 mb-0" href="@Url.Action("Index", "Home")">
+                            <img src="https://media.istockphoto.com/id/1184299091/vector/mouse-connected-to-a-book-icon-trendy-vector-thin-line-illustration-for-concepts-of-online.jpg?s=612x612&w=0&k=20&c=lm7d-y6L6tj35ETOedsG-hLL1tU9D1FzzRbZ-y3LmaM=" alt="Logo" style="height: 50px; margin-right: 10px;">
+                            <strong>Librería La Estantería Mágica</strong>
+                        </a>
+                    </li>
+
+                    @if (!string.IsNullOrEmpty(perfil))
+                    {
+                        switch (perfil)
+                        {
+                            case "Administrador":
+                                <li class="nav-item">
+                                    @Html.ActionLink("Géneros Literarios", "Index", "GenerosLiterarios", null, new { @class = "nav-link text-white" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Libros", "Index", "Libros", null, new { @class = "nav-link text-white" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Ventas", "Index", "Ventas", null, new { @class = "nav-link text-white" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Usuarios", "Index", "Usuarios", null, new { @class = "nav-link text-white" })
+                                </li>
+                                break;
+
+                            case "Usuario":
+                                <li class="nav-item">
+                                    @Html.ActionLink("Ventas", "Index", "Ventas", null, new { @class = "nav-link text-white" })
+                                </li>
+                                break;
+                        }
+                    }
+
+                    @if (!string.IsNullOrEmpty(nombreCompleto))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="@Url.Action("Logout", "Usuarios")">Cerrar Sesión</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+
+            <div>
+                @if (!string.IsNullOrEmpty(nombreCompleto))
+                {
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center text-white" href="@Url.Action("Index", "Usuarios")">
+                                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Usuario" style="height: 40px; border-radius: 50%;">
+                               <strong>@nombreCompleto</strong>
+</a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </header>
+
+    <main style="background-image: url('https://images.unsplash.com/photo-1519682337058-a94d519337bc'); background-size: cover; background-position: center; min-height: 100vh; color: white; padding-top: 50px;">
+        <div class="container text-center py-5">
+            <h1 class="mb-4">@ViewBag.Title</h1>
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="text-white text-center py-3 gradient-custom-2">
+        <p class="mb-0">Librería La Estantería Mágica - @DateTime.Now.ToString("dd MMMM yyyy")</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

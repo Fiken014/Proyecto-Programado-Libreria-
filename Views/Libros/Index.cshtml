@@ -1,0 +1,50 @@
+@model IEnumerable<PAV_PF_KendallBonilla_RandyArtavia.Models.Libros>
+
+@{
+    ViewBag.Title = "Lista de Libros";
+}
+
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        @if (Session["Perfil"]?.ToString() == "Administrador")
+        {
+            @Html.ActionLink("Crear Nuevo Libro", "Create", null, new { @class = "btn btn-primary" })
+        }
+    </div>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Genero</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var libro in Model)
+            {
+                <tr>
+                    <td>@libro.CodigoLibro</td>
+                    <td>@libro.NombreLibro</td>
+                    <td>@libro.GenerosLiterarios.CodigoGenero</td>
+                    <td>CRC @libro.Precio.ToString("N2")</td>
+                    <td>
+                        <a href="@Url.Action("Details", "Libros", new { id = libro.LibroID })" class="btn btn-info btn-sm">
+                            Detalles
+                        </a>
+                        @if (Session["Perfil"]?.ToString() == "Administrador")
+                        {
+                            <a href="@Url.Action("Edit", "Libros", new { id = libro.LibroID })" class="btn btn-warning btn-sm">
+                                Editar
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PAV_PF_KendallBonilla_RandyArtavia.Models.Ventas>
+
+@{
+    ViewBag.Title = "Lista de Ventas";
+}
+
+<div class="container my-5">
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Número de Factura</th>
+                <th>Fecha de Compra</th>
+                <th>Usuario</th>
+                <th>Total (IVA Incluido)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No se encontraron ventas.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var venta in Model)
+                {
+                    <tr>
+                        <td>@venta.NumeroFactura</td>
+                        <td>@venta.FechaCompra.ToString("dd/MM/yyyy")</td>
+                        <td>@venta.Usuarios.NombreCompleto</td>
+                        <td>₡ @venta.TotalVenta.ToString("N2")</td>
+                        <td>
+                            @Html.ActionLink("Detalles", "Details", new { id = venta.VentaID }, new { @class = "btn btn-info btn-sm" })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="text-end">
+        @if (Session["Perfil"]?.ToString() == "Administrador" || Session["Perfil"]?.ToString() == "Usuario")
+        {
+            @Html.ActionLink("Nueva Venta", "Create", null, new { @class = "btn btn-primary" })
+        }
+    </div>
+</div>

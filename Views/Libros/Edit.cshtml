@@ -1,0 +1,56 @@
+@model PAV_PF_KendallBonilla_RandyArtavia.Models.Libros
+
+@{
+    ViewBag.Title = "Editar Libro";
+}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">@ViewBag.Title</h2>
+
+    @using (Html.BeginForm("Edit", "Libros", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.LibroID) 
+        @Html.HiddenFor(model => model.CodigoLibro)
+
+        <div class="row mb-3">
+            <label for="CodigoLibro" class="col-sm-3 col-form-label">Codigo del Libro</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" value="@Model.CodigoLibro" readonly />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="NombreLibro" class="col-sm-3 col-form-label">Nombre del Libro</label>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(model => model.NombreLibro, new { @class = "form-control", @placeholder = "Ingrese el nombre del libro", required = "required" })
+                @Html.ValidationMessageFor(model => model.NombreLibro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="GeneroID" class="col-sm-3 col-form-label">Genero Literario</label>
+            <div class="col-sm-9">
+                @Html.DropDownList("GeneroID", null, "Seleccione un género", new { @class = "form-select", required = "required" })
+                @Html.ValidationMessageFor(model => model.GeneroID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="Precio" class="col-sm-3 col-form-label">Precio</label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <span class="input-group-text">CRC</span>
+                    @Html.TextBoxFor(model => model.Precio, new { @class = "form-control", @placeholder = "Ingrese el precio del libro", type = "number", step = "0.01", required = "required" })
+                </div>
+                @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary me-2">Guardar Cambios</button>
+            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>

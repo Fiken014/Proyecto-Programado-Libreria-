@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Contacto";
+}
+
+<div class="container py-5">
+    <div class="card shadow-lg gradient-custom-2 text-white">
+        <div class="card-body">
+            <h3 class="text-center mb-4">Contáctanos</h3>
+            <p class="text-center">¿Tienes alguna pregunta, comentario o sugerencia? Nos encantaría saber de ti. Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.</p>
+            <hr class="my-4">
+
+            @using (Html.BeginForm("Contact", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group mb-4">
+                    @Html.Label("Nombre Completo", htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBox("Nombre", null, new { @class = "form-control", placeholder = "Ingrese su nombre completo", required = "required" })
+                </div>
+
+                <div class="form-group mb-4">
+                    @Html.Label("Correo Electrónico", htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBox("Correo", null, new { @class = "form-control", type = "email", placeholder = "Ingrese su correo electrónico", required = "required" })
+                </div>
+
+                <div class="form-group mb-4">
+                    @Html.Label("Asunto", htmlAttributes: new { @class = "form-label" })
+                    @Html.TextBox("Asunto", null, new { @class = "form-control", placeholder = "Escriba el asunto", required = "required" })
+                </div>
+
+                <div class="form-group mb-4">
+                    @Html.Label("Mensaje", htmlAttributes: new { @class = "form-label" })
+                    @Html.TextArea("Mensaje", null, new { @class = "form-control", rows = "5", placeholder = "Escribe tu mensaje aquí", required = "required" })
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

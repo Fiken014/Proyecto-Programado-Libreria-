@@ -1,0 +1,94 @@
+﻿@model PAV_PF_KendallBonilla_RandyArtavia.Models.Usuarios
+
+@{
+    Layout = null; 
+    ViewBag.Title = "Registro de Usuario";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Content/login.css" rel="stylesheet"> 
+</head>
+<body>
+    <section class="h-100 gradient-form" style="background-color: #ee7724;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-8 col-xl-6">
+                    <div class="card rounded-3 text-black">
+                        <div class="row g-0">
+                            <div class="col">
+                                <div class="card-body p-md-5 mx-md-4">
+                                    <div class="text-center">
+                                        <img src="https://media.istockphoto.com/id/1184299091/vector/mouse-connected-to-a-book-icon-trendy-vector-thin-line-illustration-for-concepts-of-online.jpg?s=612x612&w=0&k=20&c=lm7d-y6L6tj35ETOedsG-hLL1tU9D1FzzRbZ-y3LmaM="
+                                             style="width: 185px;" alt="logo">
+                                        <h4 class="mt-1 mb-5 pb-1">Regístrate Ahora</h4>
+                                    </div>
+
+                                    @using (Html.BeginForm("Register", "Usuarios", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        
+                                <div class="form-outline mb-4">
+                                    @Html.LabelFor(model => model.NumeroIdentificacion, "Número de Cédula", htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.NumeroIdentificacion, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingresa tu número de cédula" } })
+                                </div>
+                                <div class="form-outline mb-4">
+                                    @Html.LabelFor(model => model.NombreCompleto, "Nombre Completo", htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.NombreCompleto, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingresa tu nombre completo" } })
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    @Html.LabelFor(model => model.Genero, "Género", htmlAttributes: new { @class = "form-label" })
+                                    @Html.DropDownListFor(
+                                        model => model.Genero,
+                                        new SelectList(new List<object>
+                                        {
+                                            new { Value = "M", Text = "Masculino" },
+                                            new { Value = "F", Text = "Femenino" }
+                                        }, "Value", "Text"),
+                                        "Seleccione",
+                                        new { @class = "form-control" }
+                                    )
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    @Html.LabelFor(model => model.CorreoElectronico, "Correo Electrónico", htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.CorreoElectronico, new { htmlAttributes = new { @class = "form-control", placeholder = "Ingresa tu correo electrónico" } })
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    @Html.LabelFor(model => model.TipoTarjeta, "Tipo de Tarjeta", htmlAttributes: new { @class = "form-label" })
+                                    @Html.DropDownListFor(model => model.TipoTarjeta, new SelectList(new[] { "VISA", "MASTERCARD", "AMERICAN EXPRESS" }), "Seleccione", new { @class = "form-control" })
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    @Html.LabelFor(model => model.NumeroTarjeta, "Número de Tarjeta", htmlAttributes: new { @class = "form-label" })
+                                    @Html.EditorFor(model => model.NumeroTarjeta, new { htmlAttributes = new { @class = "form-control", placeholder = "0000-0000-0000-0000" } })
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    @Html.LabelFor(model => model.Contrasena, "Contraseña", htmlAttributes: new { @class = "form-label" })
+                                    @Html.PasswordFor(model => model.Contrasena, new { @class = "form-control", placeholder = "Crea una contraseña segura" })
+                                </div>
+
+                                <div class="text-center pt-1 mb-5 pb-1">
+                                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Registrar</button>
+                                </div>
+                            }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+

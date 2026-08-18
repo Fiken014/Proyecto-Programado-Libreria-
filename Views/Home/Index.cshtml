@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Inicio - Librería La Estantería Mágica";
+}
+
+<div class="container text-center py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card gradient-custom-2 text-white shadow-lg">
+                <div class="card-body">
+                    <h1 class="card-title">¡Bienvenido a la Librería La Estantería Mágica!</h1>
+                    <p class="card-text mt-3">
+                        Explora el mundo de la literatura, encuentra los mejores libros y disfruta de nuestras colecciones mágicas.
+                    </p>
+                    <hr class="my-4" />
+                    <div class="mt-4">
+                        <a href="@Url.Action("Index", "GenerosLiterarios")" class="btn btn-light btn-lg me-3">Explorar Géneros Literarios</a>
+                        <a href="@Url.Action("Index", "Libros")" class="btn btn-light btn-lg">Ver Catálogo de Libros</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card shadow-lg">
+                <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353" class="card-img-top" alt="Libros">
+                <div class="card-body">
+                    <h5 class="card-title">Nuevas Colecciones</h5>
+                    <p class="card-text">Descubre nuestras colecciones más recientes y sumérgete en nuevas historias.</p>
+                    <a href="@Url.Action("Index", "Libros")" class="btn btn-primary">Ver Más</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg">
+                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794" class="card-img-top" alt="Ofertas">
+                <div class="card-body">
+                    <h5 class="card-title">Promociones Exclusivas</h5>
+                    <p class="card-text">Aprovecha las ofertas especiales y lleva tus libros favoritos a un precio increíble.</p>
+                    <a href="@Url.Action("Index", "Ventas")" class="btn btn-primary">Ver Ofertas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg">
+                <img src="https://mc.net.co/wp-content/uploads/2020/06/contacto.png" class="card-img-top" alt="Contacto">
+                <div class="card-body">
+                    <h5 class="card-title">Contáctanos</h5>
+                    <p class="card-text">¿Tienes alguna pregunta? Estamos aquí para ayudarte a encontrar lo que necesitas.</p>
+                    <a href="@Url.Action("Contact", "Home")" class="btn btn-primary">Contáctanos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

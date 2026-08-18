@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Acerca de Nosotros";
+}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-primary">Acerca de la Estantería Mágica</h2>
+            <p class="text-muted">
+                Bienvenido a la Librería <b>La Estantería Mágica</b>, un lugar donde las historias cobran vida y los sueños se escriben en las páginas de los libros.
+                Desde nuestra fundación, hemos trabajado incansablemente para ofrecer a nuestros clientes una amplia colección de libros, desde los clásicos literarios hasta las últimas novedades editoriales.
+            </p>
+            <p class="text-muted">
+                Nuestra misión es inspirar a las personas a través de la lectura y proporcionar un espacio donde lectores de todas las edades puedan encontrar su próxima gran aventura literaria.
+            </p>
+            <a href="@Url.Action("Index", "Libros")" class="btn btn-primary mt-3">Explorar Colección</a>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="https://images.unsplash.com/photo-1512295767273-ac70ccf8a71c" alt="Estantería Mágica" class="img-fluid rounded shadow-lg">
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/3602/3602123.png" alt="Variedad" class="img-fluid mb-3" style="width: 100px;">
+            <h5 class="text-primary">Variedad Incomparable</h5>
+            <p class="text-muted">Desde clásicos hasta bestsellers, tenemos algo para cada lector.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/3602/3602142.png" alt="Calidad" class="img-fluid mb-3" style="width: 100px;">
+            <h5 class="text-primary">Calidad Garantizada</h5>
+            <p class="text-muted">Libros cuidadosamente seleccionados para satisfacer a nuestros clientes.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/3602/3602134.png" alt="Inspiración" class="img-fluid mb-3" style="width: 100px;">
+            <h5 class="text-primary">Inspiración Literaria</h5>
+            <p class="text-muted">Fomentamos el amor por la lectura y el conocimiento.</p>
+        </div>
+    </div>
+</div>
+
+

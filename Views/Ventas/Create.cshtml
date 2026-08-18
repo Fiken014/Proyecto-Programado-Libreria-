@@ -1,0 +1,182 @@
+﻿@model PAV_PF_KendallBonilla_RandyArtavia.Models.Ventas
+
+@{
+    ViewBag.Title = "Nueva Venta";
+}
+
+<div class="container my-5">
+
+    @using (Html.BeginForm("Create", "Ventas", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="venta-form">
+            <div class="row mb-3">
+                <label for="Libros" class="col-sm-3 col-form-label">Seleccionar Libro</label>
+                <div class="col-sm-6">
+                    @Html.DropDownList("LibroID", null, "Seleccione un libro", new { @class = "form-select", id = "Libros" })
+                </div>
+                <div class="col-sm-3">
+                    <input type="number" id="Cantidad" name="Cantidad" class="form-control" placeholder="Cantidad" min="1" />
+                    <input type="hidden" id="TotalVenta" name="TotalVenta" value="total-general">
+                </div>
+            </div>
+
+            <button type="button" id="add-to-cart" class="btn btn-primary mb-3">Agregar al Carrito</button>
+        </div>
+
+        <h4 class="text-center">Carrito de Compras</h4>
+        <table class="table table-bordered" id="carrito-table">
+            <thead class="table-dark">
+                <tr>
+                    <th>Libro</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas dinámicas -->
+            </tbody>
+        </table>
+
+        <div class="text-end">
+            <h5>Subtotal: ₡ <span id="subtotal-general">0.00</span></h5>
+            <h5>IVA (13%): ₡ <span id="iva-general">0.00</span></h5>
+            <h5>Total con IVA: ₡ <span id="total-general">0.00</span></h5>
+        </div>
+
+        <div class="text-end mt-3">
+            <button type="submit" id="guardar-venta" class="btn btn-success">Guardar Venta</button>
+            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    }
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const carrito = [];
+        const carritoTableBody = document.querySelector("#carrito-table tbody");
+        const subtotalGeneralSpan = document.querySelector("#subtotal-general");
+        const ivaGeneralSpan = document.querySelector("#iva-general");
+        const totalGeneralSpan = document.querySelector("#total-general");
+
+        const addToCartButton = document.querySelector("#add-to-cart");
+        const guardarVentaButton = document.querySelector("#guardar-venta");
+
+        const libroDropdown = document.querySelector("#Libros");
+        const cantidadInput = document.querySelector("#Cantidad");
+        const totalVentaInput = document.querySelector("#TotalVenta");
+
+        // Función para actualizar el carrito en la tabla
+        function actualizarCarrito() {
+            carritoTableBody.innerHTML = ""; // Limpiar tabla
+            let subtotalGeneral = 0;
+
+            carrito.forEach((item, index) => {
+                const fila = document.createElement("tr");
+
+                fila.innerHTML = `
+                    <td>${item.nombre}</td>
+                    <td>${item.cantidad}</td>
+                    <td>₡ ${item.precio.toFixed(2)}</td>
+                    <td>₡ ${(item.cantidad * item.precio).toFixed(2)}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="eliminarDelCarrito(${index})">Eliminar</button>
+                    </td>
+                `;
+
+                carritoTableBody.appendChild(fila);
+                subtotalGeneral += item.cantidad * item.precio;
+            });
+
+            // Calcular IVA y total
+            const iva = subtotalGeneral * 0.13;
+            const totalGeneral = subtotalGeneral + iva;
+
+            // Actualizar valores en la vista
+            subtotalGeneralSpan.textContent = subtotalGeneral.toFixed(2);
+            ivaGeneralSpan.textContent = iva.toFixed(2);
+            totalGeneralSpan.textContent = totalGeneral.toFixed(2);
+            totalVentaInput.value = totalGeneral.toFixed(2);
+
+            // Depuración
+            console.log("Carrito actualizado:", carrito);
+            console.log("Subtotal general:", subtotalGeneral.toFixed(2));
+            console.log("IVA:", iva.toFixed(2));
+            console.log("Total con IVA:", totalGeneral.toFixed(2));
+            console.log("Valor del campo TotalVenta:", totalVentaInput.value);
+        }
+
+        // Evento para agregar al carrito
+        addToCartButton.addEventListener("click", function () {
+            const libroID = libroDropdown.value;
+            const libroNombre = libroDropdown.options[libroDropdown.selectedIndex].text;
+            const cantidad = parseInt(cantidadInput.value);
+
+            if (!libroID || libroID === "Seleccione un libro") {
+                alert("Debe seleccionar un libro.");
+                return;
+            }
+
+            if (!cantidad || cantidad < 1) {
+                alert("Debe ingresar una cantidad válida.");
+                return;
+            }
+
+            // Obtener precio dinámicamente desde el servidor
+            fetch(`/Ventas/GetPrecioLibro/${libroID}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
+
+                    carrito.push({ id: libroID, nombre: libroNombre, cantidad, precio: data.precio });
+                    actualizarCarrito();
+                    libroDropdown.selectedIndex = "";
+                    cantidadInput.value = "";
+                })
+                .catch(error => {
+                    alert("Error al obtener el precio del libro.");
+                    console.error(error);
+                });
+        });
+
+        // Función para eliminar del carrito
+        window.eliminarDelCarrito = function (index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        };
+
+        // Validación antes de enviar
+        guardarVentaButton.addEventListener("click", function (e) {
+            const totalVenta = parseFloat(totalVentaInput.value);
+            if (carrito.length === 0) {
+                e.preventDefault();
+                alert("Debe agregar al menos un libro al carrito.");
+            } else if (isNaN(totalVenta) || totalVenta <= 0) {
+                e.preventDefault();
+                alert("El total de la venta debe ser mayor a 0.");
+            } else {
+                carrito.forEach(item => {
+                    const inputLibroID = document.createElement("input");
+                    inputLibroID.type = "hidden";
+                    inputLibroID.name = "LibroID";
+                    inputLibroID.value = item.id;
+
+                    const inputCantidad = document.createElement("input");
+                    inputCantidad.type = "hidden";
+                    inputCantidad.name = "Cantidad";
+                    inputCantidad.value = item.cantidad;
+
+                    document.querySelector("form").appendChild(inputLibroID);
+                    document.querySelector("form").appendChild(inputCantidad);
+                });
+                console.log("Formulario enviado con TotalVenta:", totalVenta);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,26 @@
+@model PAV_PF_KendallBonilla_RandyArtavia.Models.GenerosLiterarios
+
+@{
+    ViewBag.Title = "Detalles del Genero";
+}
+
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header gradient-custom-2 text-white">
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4 font-weight-bold">Codigo</dt>
+                <dd class="col-sm-8">@Model.CodigoGenero</dd>
+
+                <dt class="col-sm-4 font-weight-bold">Descripcion</dt>
+                <dd class="col-sm-8">@Model.DescripcionGenero</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex justify-content-between">
+        @Html.ActionLink("Editar", "Edit", new { id = Model.GeneroID }, new { @class = "btn btn-warning" })
+        @Html.ActionLink("Volver a la lista", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
+</div>

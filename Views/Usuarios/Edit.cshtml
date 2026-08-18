@@ -1,0 +1,60 @@
+﻿@model PAV_PF_KendallBonilla_RandyArtavia.Models.Usuarios
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Editar Usuario";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+                @Html.HiddenFor(model => model.UsuarioID)
+                @Html.HiddenFor(model => model.Perfil) 
+                @Html.HiddenFor(model => model.NumeroIdentificacion)
+
+                <div class="mb-3">
+                    <label for="NombreCompleto" class="form-label">Nombre Completo</label>
+                    @Html.TextBoxFor(model => model.NombreCompleto, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Genero, "Género", htmlAttributes: new { @class = "form-label" })
+                    @Html.DropDownListFor(
+                        model => model.Genero,
+                        new SelectList(new List<object>
+                        {
+                            new { Value = "M", Text = "Masculino" },
+                            new { Value = "F", Text = "Femenino" }
+                        }, "Value", "Text"),
+                        "Seleccione",
+                        new { @class = "form-control" }
+                    )
+                </div>
+
+                <div class="mb-3">
+                    <label for="CorreoElectronico" class="form-label">Correo Electrónico</label>
+                    @Html.TextBoxFor(model => model.CorreoElectronico, new { @class = "form-control", type = "email", required = "required", pattern = ".+@.+\\..+" })
+                </div>
+
+                <div class="mb-3">
+                    <label for="TipoTarjeta" class="form-label">Tipo de Tarjeta</label>
+                    @Html.DropDownListFor(model => model.TipoTarjeta, new SelectList(new[] { "VISA", "MASTERCARD", "AMERICAN EXPRESS" }), new { @class = "form-select" })
+                </div>
+
+                <div class="mb-3">
+                    <label for="NumeroTarjeta" class="form-label">Número de Tarjeta</label>
+                    @Html.TextBoxFor(model => model.NumeroTarjeta, new { @class = "form-control", required = "required", pattern = "\\d{4}-\\d{4}-\\d{4}-\\d{4}" })
+                </div>
+
+                <div class="mb-3">
+                    <label for="Contrasena" class="form-label">Contraseña</label>
+                    @Html.PasswordFor(model => model.Contrasena, new { @class = "form-control", required = "required" })
+                </div>
+
+                <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                <a href="@Url.Action("Index", "Usuarios")" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>

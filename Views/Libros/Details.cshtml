@@ -1,0 +1,34 @@
+@model PAV_PF_KendallBonilla_RandyArtavia.Models.Libros
+
+@{
+    ViewBag.Title = "Detalles del Libro";
+}
+
+<div class="container my-5">
+    <div class="card shadow-sm">
+        <div class="card-header gradient-custom-2 text-white">
+            <h3 class="card-title mb-0">Informacion del Libro</h3>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label class="col-sm-3 font-weight-bold">Codigo:</label>
+                <div class="col-sm-9">@Model.CodigoLibro</div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 font-weight-bold">Nombre:</label>
+                <div class="col-sm-9">@Model.NombreLibro</div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 font-weight-bold">Genero:</label>
+                <div class="col-sm-9">@Model.GenerosLiterarios.DescripcionGenero</div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-3 font-weight-bold">Precio:</label>
+                <div class="col-sm-9">CRC @Model.Precio.ToString("N2")</div>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            @Html.ActionLink("Volver a la Lista", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
+</div>

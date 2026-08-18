@@ -1,0 +1,27 @@
+@model PAV_PF_KendallBonilla_RandyArtavia.Models.GenerosLiterarios
+
+@{
+    ViewBag.Title = "Editar Genero";
+}
+
+@using (Html.BeginForm("Edit", "GenerosLiterarios", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.GeneroID)
+
+    <div class="mb-3">
+        <label for="CodigoGenero" class="form-label">Codigo Genero</label>
+        @Html.TextBoxFor(model => model.CodigoGenero, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+
+    <div class="mb-3">
+        <label for="DescripcionGenero" class="form-label">Descripcion de Genero</label>
+        @Html.TextBoxFor(model => model.DescripcionGenero, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DescripcionGenero, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary me-2">Guardar Cambios</button>
+        @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
+}

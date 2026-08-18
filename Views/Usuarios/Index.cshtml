@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PAV_PF_KendallBonilla_RandyArtavia.Models.Usuarios>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Lista de Usuarios";
+}
+
+<div class="container my-5">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombre Completo</th>
+                <th>Correo Electrónico</th>
+                <th>Género</th>
+                <th>Tipo de Tarjeta</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in Model)
+            {
+                <tr>
+                    <td>@usuario.NombreCompleto</td>
+                    <td>@usuario.CorreoElectronico</td>
+                    <td>@usuario.Genero</td>
+                    <td>@usuario.TipoTarjeta</td>
+                    <td>
+                        @if (Session["Perfil"]?.ToString() == "Administrador" ||
+                             (Session["Perfil"]?.ToString() == "Usuario" && usuario.UsuarioID == (int)Session["UsuarioID"]))
+                        {
+                            <a href="@Url.Action("Edit", "Usuarios", new { id = usuario.UsuarioID })" class="btn btn-primary btn-sm">
+                                Editar
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
