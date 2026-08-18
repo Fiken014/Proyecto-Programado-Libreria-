@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PAV_PF_KendallBonilla_RandyArtaviaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DetalleVentas">
+    <Key>
+      <PropertyRef Name="DetalleVentaID" />
+    </Key>
+    <Property Name="DetalleVentaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VentaID" Type="Int32" />
+    <Property Name="LibroID" Type="Int32" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Libros" Relationship="Self.FK__DetalleVe__Libro__48CFD27E" FromRole="DetalleVentas" ToRole="Libros" />
+    <NavigationProperty Name="Ventas" Relationship="Self.FK__DetalleVe__Venta__47DBAE45" FromRole="DetalleVentas" ToRole="Ventas" />
+  </EntityType>
+  <EntityType Name="GenerosLiterarios">
+    <Key>
+      <PropertyRef Name="GeneroID" />
+    </Key>
+    <Property Name="GeneroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CodigoGenero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DescripcionGenero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Libros" Relationship="Self.FK__Libros__GeneroID__412EB0B6" FromRole="GenerosLiterarios" ToRole="Libros" />
+  </EntityType>
+  <EntityType Name="Libros">
+    <Key>
+      <PropertyRef Name="LibroID" />
+    </Key>
+    <Property Name="LibroID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CodigoLibro" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GeneroID" Type="Int32" />
+    <Property Name="NombreLibro" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <NavigationProperty Name="DetalleVentas" Relationship="Self.FK__DetalleVe__Libro__48CFD27E" FromRole="Libros" ToRole="DetalleVentas" />
+    <NavigationProperty Name="GenerosLiterarios" Relationship="Self.FK__Libros__GeneroID__412EB0B6" FromRole="Libros" ToRole="GenerosLiterarios" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="UsuarioID" />
+    </Key>
+    <Property Name="UsuarioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NumeroIdentificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NombreCompleto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Genero" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TipoTarjeta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NumeroTarjeta" Type="String" MaxLength="19" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Perfil" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Ventas" Relationship="Self.FK__Ventas__UsuarioI__44FF419A" FromRole="Usuarios" ToRole="Ventas" />
+  </EntityType>
+  <EntityType Name="Ventas">
+    <Key>
+      <PropertyRef Name="VentaID" />
+    </Key>
+    <Property Name="VentaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioID" Type="Int32" />
+    <Property Name="FechaCompra" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="NumeroFactura" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TotalVenta" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <NavigationProperty Name="DetalleVentas" Relationship="Self.FK__DetalleVe__Venta__47DBAE45" FromRole="Ventas" ToRole="DetalleVentas" />
+    <NavigationProperty Name="Usuarios" Relationship="Self.FK__Ventas__UsuarioI__44FF419A" FromRole="Ventas" ToRole="Usuarios" />
+  </EntityType>
+  <Association Name="FK__DetalleVe__Libro__48CFD27E">
+    <End Role="Libros" Type="Self.Libros" Multiplicity="0..1" />
+    <End Role="DetalleVentas" Type="Self.DetalleVentas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Libros">
+        <PropertyRef Name="LibroID" />
+      </Principal>
+      <Dependent Role="DetalleVentas">
+        <PropertyRef Name="LibroID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetalleVe__Venta__47DBAE45">
+    <End Role="Ventas" Type="Self.Ventas" Multiplicity="0..1" />
+    <End Role="DetalleVentas" Type="Self.DetalleVentas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ventas">
+        <PropertyRef Name="VentaID" />
+      </Principal>
+      <Dependent Role="DetalleVentas">
+        <PropertyRef Name="VentaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Libros__GeneroID__412EB0B6">
+    <End Role="GenerosLiterarios" Type="Self.GenerosLiterarios" Multiplicity="0..1" />
+    <End Role="Libros" Type="Self.Libros" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GenerosLiterarios">
+        <PropertyRef Name="GeneroID" />
+      </Principal>
+      <Dependent Role="Libros">
+        <PropertyRef Name="GeneroID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Ventas__UsuarioI__44FF419A">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+    <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="UsuarioID" />
+      </Principal>
+      <Dependent Role="Ventas">
+        <PropertyRef Name="UsuarioID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PAV_PF_KendallBonilla_RandyArtaviaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DetalleVentas" EntityType="Self.DetalleVentas" />
+    <EntitySet Name="GenerosLiterarios" EntityType="Self.GenerosLiterarios" />
+    <EntitySet Name="Libros" EntityType="Self.Libros" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+    <EntitySet Name="Ventas" EntityType="Self.Ventas" />
+    <AssociationSet Name="FK__DetalleVe__Libro__48CFD27E" Association="Self.FK__DetalleVe__Libro__48CFD27E">
+      <End Role="Libros" EntitySet="Libros" />
+      <End Role="DetalleVentas" EntitySet="DetalleVentas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetalleVe__Venta__47DBAE45" Association="Self.FK__DetalleVe__Venta__47DBAE45">
+      <End Role="Ventas" EntitySet="Ventas" />
+      <End Role="DetalleVentas" EntitySet="DetalleVentas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Libros__GeneroID__412EB0B6" Association="Self.FK__Libros__GeneroID__412EB0B6">
+      <End Role="GenerosLiterarios" EntitySet="GenerosLiterarios" />
+      <End Role="Libros" EntitySet="Libros" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Ventas__UsuarioI__44FF419A" Association="Self.FK__Ventas__UsuarioI__44FF419A">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Ventas" EntitySet="Ventas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
